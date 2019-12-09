@@ -6,18 +6,17 @@ const useStyles = createUseStyles({
   round: {
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'center',
-    padding: 8,
+    paddingRight: 50,
   }
 });
 
-const Round = ({ matchList, index }) => {
+const Round = ({ matchList, finalRound }) => {
 
-  const classes = useStyles(index);
+  const classes = useStyles();
 
   return (
     <div className={classes.round}>
-      {matchList.map(matchData => <EntryItem key={matchData.number} data={matchData} />)}
+      {matchList.map(matchData => <EntryItem key={matchData.number} data={matchData} finalRound={finalRound} />)}
     </div>
   )
 }

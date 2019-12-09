@@ -8,6 +8,7 @@ import { match } from './InterviewData.json';
 const useStyles = createUseStyles({
   match: {
     display: 'flex',
+    alignItems: 'center',
   }
 });
 
@@ -23,7 +24,7 @@ function Match() {
 
   return (
     <div className={classes.match}>
-      {roundList.map((round, idx) => <Round key={idx} matchList={round} index={idx} />)}
+      {roundList.map((round, idx) => <Round key={idx} matchList={round} finalRound={idx === roundCount-1} />)}
     </div>
   );
 }

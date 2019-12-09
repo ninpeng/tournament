@@ -15,12 +15,12 @@ const useStyles = createUseStyles({
   title: {
     background: '#393C43',
     borderRadius: 6,
-    width: 800,
+    width: 1200,
     display: 'flex',
     justifyContent: 'center',
   },
   titleSpan: {
-    width: 200,
+    width: 350,
     fontSize: '24px',
     textAlign: 'center',
     padding: '10px 0px',

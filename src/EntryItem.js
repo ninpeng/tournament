@@ -1,16 +1,14 @@
 import React from 'react';
 import { createUseStyles } from 'react-jss';
-
+import classNames from 'classnames';
 const nameWidth = 300;
 
 const useStyles = createUseStyles({
   entryBox: {
-    // position: 'absolute',
-    // top: props => props.top,
-    left: props => props.left,
     display: 'flex',
     alignItems: 'center',
     color: 'white',
+    padding: '20px 0px',
   },
   entryNumber: {
     display: 'inline-block',
@@ -18,16 +16,22 @@ const useStyles = createUseStyles({
   },
   entryContent: {
     display: 'inline-block',
-    // width: nameWidth + 30,
+    width: nameWidth + 34,
     // height: 80,
-    border: '2px solid #3A58B7',
-    borderRadius: 6,
+    // border: '2px solid #3A58B7',
+    // borderRadius: 6,
   },
   firstEntry: {
+    border: '2px solid #3A58B7',
     borderBottom: '1px solid #3A58B7',
+    borderTopLeftRadius: 6,
+    borderTopRightRadius: 6,
   },
   secondEntry: {
+    border: '2px solid #3A58B7',
     borderTop: '1px solid #3A58B7',
+    borderBottomLeftRadius: 6,
+    borderBottomRightRadius: 6,
   },
   entryName: {
     display: 'inline-block',
@@ -42,6 +46,8 @@ const useStyles = createUseStyles({
     display: 'inline-block',
     width: 25,
     paddingLeft: 5,
+    color: '#3A58B7',
+    boxSizing: 'border-box',
   },
   entryVictoryCount: {
     display: 'inline-block',
@@ -52,13 +58,18 @@ const useStyles = createUseStyles({
     boxSizing: 'border-box',
     borderLeft: '1px solid #3A58B7',
     textAlign: 'center',
+  },
+  entryVictory: {
+    background: props => props.finalRound ? '#FF7F00' : '#3A58B7',
+  },
+  entryLose: {
+    background: '#393C43',
   }
 });
 
-const EntryItem = ({ data }) => {
-  const max = 4;
-  const classes = useStyles({ top: (data.id.m-1) * 120 + (data.id.r > 1 ? max*120 : 0), left: (data.id.r-1) * 400 });
-  // console.log(data)
+const EntryItem = ({ data, finalRound }) => {
+
+  const classes = useStyles({ finalRound });
 
   return (
     <div className={classes.entryBox}>
@@ -69,14 +80,14 @@ const EntryItem = ({ data }) => {
             <span className={classes.entrySeed}>{data.seed[0]}</span>
             <span>{data.participant[0].name}</span>
           </div>
-          <div className={classes.entryVictoryCount}>{data.score[0]}</div>
+          <div className={classNames(classes.entryVictoryCount, data.score[0] > data.score[1] ? classes.entryVictory : classes.entryLose)}>{data.score[0]}</div>
         </div>
         <div className={classes.secondEntry}>
           <div className={classes.entryName}>
             <span className={classes.entrySeed}>{data.seed[1]}</span>
             <span>{data.participant[1].name}</span>
           </div>
-          <div className={classes.entryVictoryCount}>{data.score[1]}</div>
+          <div className={classNames(classes.entryVictoryCount, data.score[0] < data.score[1] ? classes.entryVictory : classes.entryLose)}>{data.score[1]}</div>
         </div>
       </div>
     </div>
