@@ -2,12 +2,12 @@ import React from 'react';
 import { createUseStyles } from 'react-jss';
 import classNames from 'classnames';
 import { useChangeHover } from './MatchProvider';
-const nameWidth = 300;
+const nameWidth = 200;
 const lineWidth = 20;
 const entryHeight = 40 + 3; // height: 40, padding 2 + 1
 const borderColor = '#3A58B7';
 const borderColorVictory = '#FF7F00';
-const borderColorLose = '#393C43';
+const scoreColorLose = '#393C43';
 
 const useStyles = createUseStyles({
   entryBox: {
@@ -39,21 +39,19 @@ const useStyles = createUseStyles({
     boxSizing: 'border-box',
   },
   entryNumber: {
-    display: 'inline-block',
     width: 20,
     textAlign: 'center',
-  },
-  entryContent: {
-    // display: 'inline-block',
-    width: nameWidth + 34,
+    color: '#696C73',
   },
   firstEntry: {
+    display: 'flex',
     border: `2px solid ${borderColor}`,
     borderBottom: `1px solid ${borderColor}`,
     borderTopLeftRadius: 6,
     borderTopRightRadius: 6,
   },
   secondEntry: {
+    display: 'flex',
     border: `2px solid ${borderColor}`,
     borderTop: `1px solid ${borderColor}`,
     borderBottomLeftRadius: 6,
@@ -62,28 +60,33 @@ const useStyles = createUseStyles({
   victoryBorder: {
     borderColor: borderColorVictory,
   },
-  entryName: {
-    display: 'inline-block',
+  entryNameBox: {
+    display: 'flex',
     width: nameWidth,
     height: 40,
     padding: 5,
-    lineHeight: '30px',
     boxSizing: 'border-box',
     background: '#29292C',
   },
-  entryNameVictory: {
+  entryNameBoxVictory: {
     borderRightColor: borderColor,
     background: borderColor,
   },
   entrySeed: {
-    display: 'inline-block',
-    width: 25,
-    paddingLeft: 5,
+    lineHeight: '30px',
+    width: 20,
+    marginRight: 5,
+    textAlign: 'center',
     color: '#1A3897',
-    boxSizing: 'border-box',
+  },
+  entryName: {
+    lineHeight: '30px',
+    width: '100%',
+    textOverflow: 'ellipsis',
+    overflow: 'hidden',
+    whiteSpace: 'nowrap',
   },
   entryVictoryCount: {
-    display: 'inline-block',
     width: 30,
     height: 40,
     padding: 5,
@@ -97,34 +100,34 @@ const useStyles = createUseStyles({
     background: props => props.finalRound ? borderColorVictory : borderColor,
   },
   entryLose: {
-    background: borderColorLose,
+    background: scoreColorLose,
   }
 });
 
-const EntryItem = ({ data, victorySeed, firstRound, finalRound }) => {
+const EntryItem = ({ data, winnerSeed, firstRound, finalRound }) => {
   
   const [isHover, setHover] = useChangeHover();
 
   const { r } = data.id;
   const padding = Math.pow(2, r - 1) * (entryHeight + 20) - entryHeight;
 
-  const classes = useStyles({ isHover, padding, firstRound, finalRound });
+  const classes = useStyles({ padding, finalRound });
 
   const victoryIndex = data.score[0] > data.score[1] ? 0 : 1;
 
-  const isHoverVictoryFirst = isHover && data.seed[0] === victorySeed;
-  const isHoverVictorySecond = isHover && data.seed[1] === victorySeed;
-  const isFinalVictoryFirst = finalRound && victoryIndex === 0
-  const isFinalVictorySecond = finalRound && victoryIndex === 1;
+  const isHoverVictoryFirst = isHover && data.seed[0] === winnerSeed;
+  const isHoverVictorySecond = isHover && data.seed[1] === winnerSeed;
+  const isFinalWinnerFirst = finalRound && victoryIndex === 0
+  const isFinalWinnerSecond = finalRound && victoryIndex === 1;
 
   const handleMouseEnter = (e) => {
-    if (Number(e.target.id) === victorySeed) {
+    if (Number(e.target.id) === winnerSeed) {
       setHover(true);
     }
   }
 
   const handleMouseLeave = (e) => {
-    if (Number(e.target.id) === victorySeed) {
+    if (Number(e.target.id) === winnerSeed) {
       setHover(false);
     }
   }
@@ -133,18 +136,18 @@ const EntryItem = ({ data, victorySeed, firstRound, finalRound }) => {
     <div className={classes.entryBox}>
       { !firstRound && <div className={classes.entryHead} /> }
       <div className={classes.entryNumber}>{data.number}</div>
-      <div className={classes.entryContent}>
-        <div className={classNames(classes.firstEntry, isFinalVictoryFirst && classes.victoryBorder)}>
-          <div id={data.seed[0]} className={classNames(classes.entryName, isHoverVictoryFirst && classes.entryNameVictory)} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+      <div>
+        <div className={classNames(classes.firstEntry, isFinalWinnerFirst && classes.victoryBorder)}>
+          <div id={data.seed[0]} className={classNames(classes.entryNameBox, isHoverVictoryFirst && classes.entryNameBoxVictory)} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
             <span className={classes.entrySeed}>{data.seed[0]}</span>
-            <span>{data.participant[0].name}</span>
+            <span className={classes.entryName}>{data.participant[0].name}</span>
           </div>
           <div className={classNames(classes.entryVictoryCount, data.score[0] > data.score[1] ? classes.entryVictory : classes.entryLose)}>{data.score[0]}</div>
         </div>
-        <div className={classNames(classes.secondEntry, isFinalVictorySecond && classes.victoryBorder)}>
-          <div id={data.seed[1]} className={classNames(classes.entryName, isHoverVictorySecond && classes.entryNameVictory)} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+        <div className={classNames(classes.secondEntry, isFinalWinnerSecond && classes.victoryBorder)}>
+          <div id={data.seed[1]} className={classNames(classes.entryNameBox, isHoverVictorySecond && classes.entryNameBoxVictory)} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
             <span className={classes.entrySeed}>{data.seed[1]}</span>
-            <span>{data.participant[1].name}</span>
+            <span className={classes.entryName}>{data.participant[1].name}</span>
           </div>
           <div className={classNames(classes.entryVictoryCount, data.score[0] < data.score[1] ? classes.entryVictory : classes.entryLose)}>{data.score[1]}</div>
         </div>

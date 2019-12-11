@@ -4,9 +4,8 @@ import Match from './match/Match';
 
 const useStyles = createUseStyles({
   root: {
-    position: 'relative',
-    height: '100vh',
-    background: '#161718',
+    // position: 'relative',
+    
     padding: 50,
   },
   header: {
@@ -15,12 +14,12 @@ const useStyles = createUseStyles({
   title: {
     background: '#393C43',
     borderRadius: 6,
-    width: 1200,
+    width: 850,
     display: 'flex',
     justifyContent: 'center',
   },
   titleSpan: {
-    width: 350,
+    width: '100%',
     fontSize: '24px',
     textAlign: 'center',
     padding: '10px 0px',

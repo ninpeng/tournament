@@ -2,7 +2,7 @@ import React from 'react';
 import { createUseStyles } from 'react-jss';
 import Round from './Round';
 import { MatchProvider } from './MatchProvider';
-import { match } from './InterviewData.json';
+import { match } from '../json/InterviewData.json';
 
 const useStyles = createUseStyles({
   match: {
@@ -21,12 +21,12 @@ function Match() {
 
   const lastMatch = match[match.length-1];
   const victoryIdx = lastMatch.score[0] > lastMatch.score[1] ? 0 : 1;
-  const victorySeed = lastMatch.seed[victoryIdx];
+  const winnerSeed = lastMatch.seed[victoryIdx];
 
   return (
-    <MatchProvider >
+    <MatchProvider>
       <div className={classes.match}>
-        {roundList.map((round, idx) => <Round key={idx} matchList={round} victorySeed={victorySeed} firstRound={idx===0} finalRound={idx === roundCount-1} />)}
+        {roundList.map((round, idx) => <Round key={idx} matchList={round} winnerSeed={winnerSeed} firstRound={idx===0} finalRound={idx === roundCount-1} />)}
       </div>
     </MatchProvider>
   );
