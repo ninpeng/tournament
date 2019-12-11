@@ -6,17 +6,16 @@ const useStyles = createUseStyles({
   round: {
     display: 'flex',
     flexDirection: 'column',
-    paddingRight: 50,
   }
 });
 
-const Round = ({ matchList, finalRound }) => {
+const Round = (props) => {
 
   const classes = useStyles();
 
   return (
     <div className={classes.round}>
-      {matchList.map(matchData => <EntryItem key={matchData.number} data={matchData} finalRound={finalRound} />)}
+      {props.matchList.map(matchData => <EntryItem key={matchData.number} data={matchData} {...props} />)}
     </div>
   )
 }
