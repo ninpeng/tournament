@@ -8,7 +8,7 @@ import { match } from './InterviewData.json';
 const useStyles = createUseStyles({
   match: {
     display: 'flex',
-    alignItems: 'center',
+    // alignItems: 'center',
   }
 });
 

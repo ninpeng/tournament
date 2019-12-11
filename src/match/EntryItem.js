@@ -1,14 +1,16 @@
 import React from 'react';
 import { createUseStyles } from 'react-jss';
 import classNames from 'classnames';
+
 const nameWidth = 300;
+const entryHeight = 40 + 3;// height: 40, padding 2 + 1
 
 const useStyles = createUseStyles({
   entryBox: {
     display: 'flex',
     alignItems: 'center',
     color: 'white',
-    padding: '20px 0px',
+    padding: props => `${props.padding}px 0px`,
   },
   entryNumber: {
     display: 'inline-block',
@@ -69,7 +71,10 @@ const useStyles = createUseStyles({
 
 const EntryItem = ({ data, finalRound }) => {
 
-  const classes = useStyles({ finalRound });
+  const { r } = data.id;
+  const padding = Math.pow(2, r-1) * (entryHeight + 20) - entryHeight;
+
+  const classes = useStyles({ padding, finalRound });
 
   return (
     <div className={classes.entryBox}>
