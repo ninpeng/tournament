@@ -1,6 +1,6 @@
 import React from 'react';
 import { createUseStyles } from 'react-jss';
-import EntryItem from './EntryItem';
+import MatchItem from './MatchItem';
 
 const useStyles = createUseStyles({
   round: {
@@ -9,13 +9,14 @@ const useStyles = createUseStyles({
   }
 });
 
+// 대진표의 매치들을 담고 있는 라운드 컴포넌트
 const Round = (props) => {
 
   const classes = useStyles();
 
   return (
     <div className={classes.round}>
-      {props.matchList.map(matchData => <EntryItem key={matchData.number} data={matchData} {...props} />)}
+      {props.matchList.map(matchData => <MatchItem key={matchData.number} data={matchData} {...props} />)}
     </div>
   )
 }

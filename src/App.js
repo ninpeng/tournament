@@ -4,8 +4,6 @@ import Match from './match/Match';
 
 const useStyles = createUseStyles({
   root: {
-    // position: 'relative',
-    
     padding: 50,
   },
   header: {
@@ -26,7 +24,7 @@ const useStyles = createUseStyles({
   },
   main: {
     position: 'relative',
-    top: '50px',
+    top: '30px',
   }
 });
 
@@ -36,8 +34,6 @@ function App() {
 
   return (
     <div className="App">
-      <header className="App-header">
-      </header>
       <section>
         <article>
           <div className={classes.root}>
